@@ -1,0 +1,25 @@
+/* Сбрасываем стандартные отступы и настраиваем box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Делаем html и body на всю ширину и высоту */
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden; /* Убираем горизонтальный скролл */
+}
+
+/* Корневой элемент React */
+#root {
+  width: 100vw; /* 100% viewport width */
+  min-height: 100vh; /* Минимальная высота 100% viewport height */
+  overflow-x: hidden;
+}
+
+
+button{
+  margin-top: 20px ;
+}

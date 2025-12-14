@@ -1,0 +1,484 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1f2933;
+  background: #f5f7fb;
+}
+
+/* Контейнер всего приложения */
+.drive {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Верхний бар */
+.drive__topbar {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  gap: 12px;
+}
+
+.drive__topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drive__brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.drive__brand-logo {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  border: 2px solid #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.drive__brand-text {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.drive__search {
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f3f7;
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.drive__search-icon {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.drive__search input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  padding: 4px 0;
+}
+
+.drive__topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drive__avatar {
+  width: 32px;
+  height: 32px;
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+/* Иконка-кнопка */
+.drive__icon-button {
+  border: none;
+  background: transparent;
+  border-radius: 999px;
+  padding: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.drive__icon-button:hover {
+  background: #e5e7eb;
+}
+
+/* Основное тело: сайдбар + контент */
+.drive__body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Сайдбар */
+.drive__sidebar {
+  width: 240px;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: width 0.18s ease;
+}
+
+.drive__sidebar--collapsed {
+  width: 0;
+  padding: 0;
+  border-right: none;
+  overflow: hidden;
+}
+
+.drive__new-button {
+  width: 100%;
+  border-radius: 20px;
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.drive__new-button:hover {
+  background: #1d4ed8;
+}
+
+.drive__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drive__nav-item {
+  border: none;
+  background: transparent;
+  border-radius: 18px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.drive__nav-item:hover {
+  background: #e5f0ff;
+}
+
+.drive__nav-item--active {
+  background: #dbeafe;
+  font-weight: 500;
+}
+
+.drive__nav-icon {
+  width: 18px;
+}
+
+.drive__sidebar-section {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+}
+
+.drive__sidebar-section-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 4px;
+}
+
+.drive__folder-tree {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.drive__folder-tree-item {
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-size: 13px;
+}
+
+.drive__folder-tree-item--active {
+  font-weight: 500;
+}
+
+/* Основной контент */
+.drive__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 12px 16px;
+}
+
+/* Верхняя панель внутри main */
+.drive__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.drive__toolbar-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.drive__toolbar-breadcrumb {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 2px;
+}
+
+.drive__breadcrumb-item button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.drive__breadcrumb-item button:hover {
+  text-decoration: underline;
+}
+
+.drive__breadcrumb-sep {
+  margin: 0 4px;
+}
+
+.drive__toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.drive__view-toggle {
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  padding: 4px 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.drive__view-toggle--active {
+  background: #e5f0ff;
+}
+
+/* Sub-toolbar */
+.drive__subtoolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 8px;
+}
+
+.drive__subtoolbar-left,
+.drive__subtoolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.drive__subtoolbar-sep {
+  opacity: 0.6;
+}
+
+.drive__text-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  font-size: 12px;
+  color: #2563eb;
+}
+
+.drive__text-button:hover {
+  text-decoration: underline;
+}
+
+.drive__text-button--danger {
+  color: #dc2626;
+}
+
+/* Grid view */
+.drive__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  align-content: flex-start;
+  overflow: auto;
+}
+
+/* Карточка файла/папки */
+.drive__card {
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+  transition: box-shadow 0.14s ease, transform 0.14s ease, border-color 0.14s ease;
+}
+
+.drive__card:hover {
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  transform: translateY(-1px);
+}
+
+.drive__card--selected {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb33;
+}
+
+.drive__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drive__card-icon {
+  font-size: 32px;
+  margin-top: 4px;
+}
+
+.drive__card-name {
+  font-size: 13px;
+  margin-top: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drive__card-meta {
+  font-size: 11px;
+  color: #9ca3af;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2px;
+}
+
+/* Табличный вид */
+.drive__table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 13px;
+}
+
+.drive__table thead {
+  background: #f9fafb;
+  text-align: left;
+}
+
+.drive__table th,
+.drive__table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f1f3f7;
+}
+
+.drive__table th {
+  font-weight: 500;
+  color: #6b7280;
+  cursor: default;
+  user-select: none;
+}
+
+.drive__table th:hover {
+  background: #f3f4f6;
+}
+
+.drive__cell-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.drive__row--selected {
+  background: #eff6ff;
+}
+
+/* Пустое состояние */
+.drive__empty {
+  margin-top: 40px;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .drive__sidebar {
+    display: none;
+  }
+  .drive__sidebar--collapsed {
+    display: none;
+  }
+  .drive__search {
+    display: none;
+  }
+}
+/* ...всё как в предыдущем варианте (topbar, sidebar, grid, table и т.д.)... */
+
+/* Кнопка + меню "Создать" */
+
+.drive__new {
+  position: relative;
+}
+
+.drive__new-menu {
+  position: absolute;
+  top: 44px;
+  left: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+  padding: 6px 0;
+  width: 190px;
+  z-index: 20;
+}
+
+.drive__new-menu-item {
+  width: 100%;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.drive__new-menu-item:hover {
+  background: #eff6ff;
+}
+.drive__card-header-actions {
+  display: flex;
+  gap: 4px;
+}
+
+/* остальной css из прошлой версии можно оставить без изменений */
