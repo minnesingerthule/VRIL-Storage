@@ -192,6 +192,27 @@ export async function apiDeleteFolder(token: string, id: number) {
   }
 }
 
-export async function apiDownloadUrl(id: number) {
-  return `${API_URL}/drive/files/${id}/download`;
+// В api.tsx удалите apiDownloadUrl и добавьте это:
+
+export async function apiDownloadFile(token: string, id: number, filename: string) {
+  const res = await fetch(`${API_URL}/drive/files/${id}/download`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!res.ok) {
+    throw new Error("Download failed");
+  }
+
+  // Получаем файл как "blob" (Binary Large Object)
+  const blob = await res.blob();
+  
+  // Создаем временную ссылку в браузере
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename; // Имя файла для сохранения
+  document.body.appendChild(a);
+  a.click(); // Имитируем клик
+  a.remove(); // Убираем ссылку
+  window.URL.revokeObjectURL(url); // Очищаем память
 }
