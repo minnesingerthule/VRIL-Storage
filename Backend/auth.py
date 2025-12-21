@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 SECRET_KEY = "YOUR_SUPER_SECRET_KEY_CHANGE_THIS"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 # 1 день
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 

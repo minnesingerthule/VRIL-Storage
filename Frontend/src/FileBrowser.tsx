@@ -10,7 +10,7 @@ import {
   apiCreateFolder,
   apiDeleteFile,
   apiDeleteFolder,
-  apiDownloadUrl,
+  apiDownloadFile as apiDownloadUrl,
   apiFetchState,
   apiUpdateFile,
   apiUpdateFolder,
@@ -51,7 +51,6 @@ function FileBrowser({ token, email, onLogout }: Props) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const folderInputRef = useRef<HTMLInputElement | null>(null);
 
-  // загрузка состояния
   const loadState = async () => {
     setLoading(true);
     setError(null);
@@ -203,7 +202,7 @@ function FileBrowser({ token, email, onLogout }: Props) {
       await apiUpdateFile(token, fileId, { starred: next });
     } catch (err) {
       console.error(err);
-      void loadState(); // на всякий случай перезагрузим
+      void loadState(); 
     }
   };
 
@@ -363,7 +362,6 @@ function FileBrowser({ token, email, onLogout }: Props) {
     }
   };
 
-  // перемещение в корзину
   const handleMoveToTrashSelected = async () => {
     if (!state || !selectedIds.length) return;
     if (
@@ -406,7 +404,6 @@ function FileBrowser({ token, email, onLogout }: Props) {
 
     Array.from(folderIds).forEach(collectChildren);
 
-    // обновляем фронт
     setState(prev =>
       prev
         ? {
@@ -461,8 +458,6 @@ function FileBrowser({ token, email, onLogout }: Props) {
       setSection("my-drive");
     }
   };
-
-  // восстановление из корзины
   const handleRestoreSelected = () => {
     if (!state || !selectedIds.length) return;
 
@@ -551,7 +546,6 @@ function FileBrowser({ token, email, onLogout }: Props) {
     });
   };
 
-  // удаление навсегда
   const handlePermanentDeleteSelected = async () => {
     if (!state || !selectedIds.length) return;
     if (
@@ -1002,8 +996,7 @@ function FileBrowser({ token, email, onLogout }: Props) {
                   isFolder={false}
                   selected={isSelected(file.id)}
                   onClick={async () => {
-                    const url = await apiDownloadUrl(file.id);
-                    window.open(url, "_blank");
+                    apiDownloadUrl(token, file.id, file.name);
                   }}
                   onToggleSelect={() => toggleSelect(file.id)}
                   onToggleStar={() => handleStarToggle(file.id)}

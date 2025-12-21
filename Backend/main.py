@@ -131,7 +131,6 @@ def create_folder(folder_in: schemas.FolderCreate, current_user: models.User = D
     db.add(new_folder)
     db.commit()
     db.refresh(new_folder)
-    # Возвращаем с маппингом
     return schemas.FolderOut(
         id=new_folder.id, name=new_folder.name, parentId=new_folder.parent_id,
         trashed=new_folder.trashed, originalParentId=new_folder.original_parent_id
@@ -177,16 +176,11 @@ def update_file(file_id: int, patch: schemas.FileUpdate, current_user: models.Us
     if not db_file:
         raise HTTPException(status_code=404, detail="File not found")
     
-    # Обновляем поля, если они переданы
     if patch.starred is not None: db_file.starred = patch.starred
     if patch.isShared is not None: db_file.is_shared = patch.isShared
     if patch.trashed is not None: db_file.trashed = patch.trashed
     if patch.parentId is not None: db_file.parent_id = patch.parentId
-    # Если хотим переместить в корень (parentId=null), надо явно проверить, было ли поле в запросе
-    # Но Pydantic Optional None сложен. В данном простом примере считаем, что None не меняет поле.
-    # Если нужно сбросить в Null, логика чуть сложнее (обычно используют Sentinel).
-    
-    # Для простоты: если пришел originalParentId
+
     if patch.originalParentId is not None: db_file.original_parent_id = patch.originalParentId
 
     db.commit()
