@@ -669,7 +669,7 @@ function FileBrowser({ token, email, onLogout }: Props) {
         onChange={handleFolderInputChange}
       />
 
-      {/* Верхний бар */}
+      {}
       <header className="drive__topbar">
         <div className="drive__topbar-left">
           <button
@@ -704,7 +704,7 @@ function FileBrowser({ token, email, onLogout }: Props) {
       </header>
 
       <div className="drive__body">
-        {/* Сайдбар */}
+        {}
         <aside
           className={
             "drive__sidebar" +
@@ -829,9 +829,9 @@ function FileBrowser({ token, email, onLogout }: Props) {
           </div>
         </aside>
 
-        {/* Основная область */}
+        {}
         <main className="drive__main">
-          {/* Панель действий */}
+          {}
           <div className="drive__toolbar">
             <div className="drive__toolbar-left">
               <span className="drive__toolbar-title">
@@ -898,7 +898,7 @@ function FileBrowser({ token, email, onLogout }: Props) {
             </div>
           </div>
 
-          {/* Вспомогательная панель */}
+          {}
           <div className="drive__subtoolbar">
             <div className="drive__subtoolbar-left">
               <button className="drive__text-button" onClick={selectAll}>

@@ -28,7 +28,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-def get_current_user(token: text = Depends(oauth2_scheme), db: Session = Depends(get_db)):
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -36,7 +36,7 @@ def get_current_user(token: text = Depends(oauth2_scheme), db: Session = Depends
     )
     try:
         payload = jwt.decode(token, auth.SECRET_KEY, algorithms=[auth.ALGORITHM])
-        username: text = payload.get("sub")
+        username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
     except JWTError:
@@ -45,6 +45,7 @@ def get_current_user(token: text = Depends(oauth2_scheme), db: Session = Depends
     if user is None:
         raise credentials_exception
     return user
+
 
 @app.post("/auth/register", response_model=schemas.UserOut)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -77,9 +78,9 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 def read_users_me(current_user: models.User = Depends(get_current_user)):
     return current_user
 
+
 @app.get("/drive/state", response_model=schemas.DriveState)
 def get_drive_state(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
-
     root_folder = db.query(models.Folder).filter(
         models.Folder.owner_id == current_user.id,
         models.Folder.parent_id == None
@@ -104,7 +105,7 @@ def get_drive_state(current_user: models.User = Depends(get_current_user), db: S
     ]
 
     return {
-        "rootFolderId": root_folder.id if root_folder else 0,
+        "rootFolderId": root_folder.id if root_folder else 0, # Защита, если рут вдруг не создался
         "folders": folders_out,
         "files": files_out
     }
@@ -127,11 +128,10 @@ def create_folder(folder_in: schemas.FolderCreate, current_user: models.User = D
 @app.post("/drive/files/upload", response_model=schemas.FileOut)
 def upload_file(
     file: UploadFile = UploadFileParam(...),
-    folderId: Optional[text] = Form(None),
+    folderId: Optional[str] = Form(None), # FormData приходит как строка
     current_user: models.User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-
     file_location = f"{UPLOAD_DIR}/{current_user.id}_{file.filename}"
     with open(file_location, "wb+") as file_object:
         shutil.copyfileobj(file.file, file_object)
